@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analytics | Feastify Admin</title>
+  <meta name="description" content="Feastify restaurant management - admin area">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23173b30'/%3E%3Ctext x='32' y='44' font-family='Georgia' font-size='36' fill='%23e3a13a' text-anchor='middle'%3EF%3C/text%3E%3C/svg%3E">
+
+  <!-- Bootstrap 5, Font Awesome icons and Google Fonts (loaded from the internet) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&display=swap">
+
+  <!-- Feastify styles -->
+  <link rel="stylesheet" href="static/css/admin.css">
+
+  <!-- api.js must load first (shared helpers + image fallback) -->
+  <script src="static/js/api.js"></script>
+  <meta name="robots" content="noindex">
+</head>
+<!-- Admin page: does NOT load main.js, so admins are never counted as website visitors -->
+<body class="admin-body" data-admin-page="analytics">
+  <div class="auth-overlay" id="authOverlay"><div><span class="spinner-border spinner-border-sm me-2"></span>Checking admin access...</div></div>
+
+  <div class="admin-wrapper">
+    <!-- Sidebar is built by static/js/admin.js -->
+    <nav class="admin-sidebar" id="adminSidebar" aria-label="Admin navigation"></nav>
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <div class="admin-main">
+      <header class="admin-topbar">
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+        <div>
+          <h1>Analytics</h1>
+          <div class="sub">Charts calculated live from MongoDB</div>
+        </div>
+        <div class="actions">
+          <span class="updated-at"><span class="live-dot"></span><span class="txt">Updated</span> <span id="updatedAt">-</span></span>
+          <button class="btn btn-soft btn-sm" id="refreshBtn" type="button"><i class="fa-solid fa-rotate me-1"></i>Refresh</button>
+        </div>
+      </header>
+
+      <main class="admin-content">
+        <div class="row g-3 mb-4">
+          <div class="col-sm-6 col-xl-4">
+            <div class="stat-card feature-card">
+              <div class="ic ic-leaf"><i class="fa-solid fa-users"></i></div>
+              <div><div class="label">Total Customers</div><div class="value" data-stat="total_customers">-</div><div class="hint">Registered accounts</div></div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-xl-4">
+            <div class="stat-card">
+              <div class="ic ic-info"><i class="fa-solid fa-eye"></i></div>
+              <div><div class="label">Website Visits</div><div class="value" data-stat="website_visitors">-</div><div class="hint">All customer/guest sessions</div></div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-xl-4">
+            <div class="stat-card">
+              <div class="ic ic-saffron"><i class="fa-solid fa-book-open"></i></div>
+              <div><div class="label">Total Bookings</div><div class="value" data-stat="total_bookings">-</div><div class="hint">All statuses</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-3 mb-4">
+          <div class="col-sm-6 col-xl-3">
+            <div class="stat-card"><div class="ic ic-leaf"><i class="fa-solid fa-chart-line"></i></div>
+              <div><div class="label">Visits (7 days)</div><div class="value" id="weekVisits">-</div><div class="hint">Sessions this week</div></div></div>
+          </div>
+          <div class="col-sm-6 col-xl-3">
+            <div class="stat-card"><div class="ic ic-saffron"><i class="fa-solid fa-calendar-plus"></i></div>
+              <div><div class="label">Bookings (7 days)</div><div class="value" id="weekBookings">-</div><div class="hint">Bookings made this week</div></div></div>
+          </div>
+          <div class="col-sm-6 col-xl-3">
+            <div class="stat-card"><div class="ic ic-info"><i class="fa-solid fa-user-plus"></i></div>
+              <div><div class="label">Sign-ups (7 days)</div><div class="value" id="weekRegs">-</div><div class="hint">New customer accounts</div></div></div>
+          </div>
+          <div class="col-sm-6 col-xl-3">
+            <div class="stat-card"><div class="ic ic-chili"><i class="fa-solid fa-ban"></i></div>
+              <div><div class="label">Cancellation rate</div><div class="value" id="cancelRate">-</div><div class="hint">Of all bookings</div></div></div>
+          </div>
+        </div>
+
+        <h2 class="h5 mb-3">Website visits <span class="text-muted fw-normal small">(admins are never counted)</span></h2>
+        <div class="row g-3 mb-4">
+          <div class="col-lg-12">
+            <div class="a-panel">
+              <div class="a-panel-head"><div><h2>Daily visits</h2><p>Last 7 days</p></div></div>
+              <div class="chart-box"><canvas id="visitsDaily" role="img" aria-label="Daily visits"></canvas></div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="a-panel">
+              <div class="a-panel-head"><div><h2>Weekly visits</h2><p>Last 8 weeks (week starting Monday)</p></div></div>
+              <div class="chart-box"><canvas id="visitsWeekly" role="img" aria-label="Weekly visits"></canvas></div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="a-panel">
+              <div class="a-panel-head"><div><h2>Monthly visits</h2><p>Last 6 months</p></div></div>
+              <div class="chart-box"><canvas id="visitsMonthly" role="img" aria-label="Monthly visits"></canvas></div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h5 mb-3">Bookings</h2>
+        <div class="row g-3 mb-4">
+          <div class="col-lg-8">
+            <div class="a-panel">
+              <div class="a-panel-head"><div><h2>Bookings made per day</h2><p>Last 7 days, by the day the booking was created</p></div></div>
+              <div class="chart-box"><canvas id="bookingsDaily" role="img" aria-label="Bookings made per day"></canvas></div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="a-panel">
+              <div class="a-panel-head"><div><h2>Booking status</h2><p>All bookings by current status</p></div></div>
+              <div class="chart-box"><canvas id="bookingStatus" role="img" aria-label="Booking status"></canvas><p id="statusEmpty" class="position-absolute top-50 start-50 translate-middle text-muted small text-center" hidden>No bookings yet</p></div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="a-panel">
+              <div class="a-panel-head"><div><h2>Monthly bookings</h2><p>Last 6 months</p></div></div>
+              <div class="chart-box"><canvas id="bookingsMonthly" role="img" aria-label="Monthly bookings"></canvas></div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="a-panel">
+              <div class="a-panel-head"><div><h2>Reservations for the next 7 days</h2><p>By reservation date, excluding cancelled</p></div></div>
+              <div class="chart-box"><canvas id="bookingsUpcoming" role="img" aria-label="Reservations for the next 7 days"></canvas></div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="a-panel">
+              <div class="a-panel-head"><div><h2>Table popularity</h2><p>Bookings per table, excluding cancelled</p></div></div>
+              <div class="chart-box"><canvas id="tablePopularity" role="img" aria-label="Table popularity"></canvas></div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="a-panel">
+              <div class="a-panel-head"><div><h2>Busiest time slots</h2><p>Bookings per time slot, excluding cancelled</p></div></div>
+              <div class="chart-box"><canvas id="timeSlots" role="img" aria-label="Busiest time slots"></canvas><p id="slotsEmpty" class="position-absolute top-50 start-50 translate-middle text-muted small text-center" hidden>No bookings yet</p></div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h5 mb-3">Customers</h2>
+        <h2 class="h5 mb-3">Food pre-orders <span class="text-muted fw-normal small">(which dishes customers order most)</span></h2>
+        <div class="row g-3 mb-3">
+          <div class="col-sm-6 col-xl-3"><div class="stat-card"><div class="ic ic-saffron"><i class="fa-solid fa-trophy"></i></div>
+            <div><div class="label">Most ordered dish</div><div class="value dish-name" id="topDish">-</div><div class="hint">All meals, not cancelled</div></div></div></div>
+          <div class="col-sm-6 col-xl-3"><div class="stat-card"><div class="ic ic-leaf"><i class="fa-solid fa-sun"></i></div>
+            <div><div class="label">Top lunch dish</div><div class="value dish-name" id="topLunch">-</div><div class="hint">12 PM - 3 PM bookings</div></div></div></div>
+          <div class="col-sm-6 col-xl-3"><div class="stat-card"><div class="ic ic-info"><i class="fa-solid fa-moon"></i></div>
+            <div><div class="label">Top dinner dish</div><div class="value dish-name" id="topDinner">-</div><div class="hint">6 PM - 10 PM bookings</div></div></div></div>
+          <div class="col-sm-6 col-xl-3"><div class="stat-card"><div class="ic ic-chili"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+            <div><div class="label">Pre-order value</div><div class="value" id="foodRevenue">-</div><div class="hint" id="foodHint">Dishes ordered</div></div></div></div>
+        </div>
+        <div class="row g-3 mb-4">
+          <div class="col-lg-7"><div class="a-panel">
+            <div class="a-panel-head"><div><h2>Most ordered dishes</h2><p>Top 10 dishes, split into lunch and dinner</p></div></div>
+            <div class="chart-box tall"><canvas id="topDishes" role="img" aria-label="Most ordered dishes"></canvas>
+              <p id="dishEmpty" class="position-absolute top-50 start-50 translate-middle text-muted small text-center" hidden>No food pre-orders yet</p></div>
+          </div></div>
+          <div class="col-lg-5"><div class="a-panel">
+            <div class="a-panel-head"><div><h2>Dish ranking</h2><p>Quantity ordered and pre-order value</p></div></div>
+            <div class="table-wrap"><table class="a-table">
+              <thead><tr><th>#</th><th>Dish</th><th>Lunch</th><th>Dinner</th><th>Total</th><th>Value</th></tr></thead>
+              <tbody id="dishTable"><tr class="empty-row"><td colspan="6">Loading...</td></tr></tbody>
+            </table></div>
+          </div></div>
+        </div>
+        <div class="row g-3">
+          <div class="col-lg-4">
+            <div class="a-panel">
+              <div class="a-panel-head"><div><h2>Total customers</h2><p>Cumulative customer accounts, last 6 months</p></div></div>
+              <div class="chart-box"><canvas id="customerGrowth" role="img" aria-label="Total customers"></canvas></div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="a-panel">
+              <div class="a-panel-head"><div><h2>Customer registrations</h2><p>New accounts per month</p></div></div>
+              <div class="chart-box"><canvas id="registrations" role="img" aria-label="Customer registrations"></canvas></div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="a-panel">
+              <div class="a-panel-head"><div><h2>Registrations this week</h2><p>New accounts per day</p></div></div>
+              <div class="chart-box"><canvas id="registrationsDaily" role="img" aria-label="Registrations this week"></canvas></div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+  <script src="static/js/admin.js"></script>
+  <script src="static/js/analytics.js"></script>
+</body>
+</html>

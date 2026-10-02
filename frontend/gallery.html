@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery | Feastify</title>
+  <meta name="description" content="Photos of Feastify's food, interior and kitchen.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23173b30'/%3E%3Ctext x='32' y='44' font-family='Georgia' font-size='36' fill='%23e3a13a' text-anchor='middle'%3EF%3C/text%3E%3C/svg%3E">
+
+  <!-- Bootstrap 5, Font Awesome icons and Google Fonts (loaded from the internet) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&display=swap">
+
+  <!-- Feastify styles -->
+  <link rel="stylesheet" href="static/css/style.css">
+
+  <!-- api.js must load first (shared helpers + image fallback) -->
+  <script src="static/js/api.js"></script>
+  <script src="static/js/main.js"></script>
+</head>
+<body data-page="gallery">
+  <!-- Navbar is built by static/js/main.js so it is identical on every page -->
+  <div id="site-navbar"></div>
+
+  <main id="main">
+    <header class="page-header bg-gallery">
+      <div class="container">
+        <div class="crumbs"><a href="index.html">Home</a> / Gallery</div>
+        <h1>Gallery</h1>
+        <p>The dining room, the kitchen and what comes out of it.</p>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="container">
+        <div class="filter-bar mb-4" role="group" aria-label="Filter photos">
+          <button type="button" class="filter-pill active" data-gallery-filter="all">All photos</button>
+          <button type="button" class="filter-pill" data-gallery-filter="food">Food</button>
+          <button type="button" class="filter-pill" data-gallery-filter="interior">Interior</button>
+          <button type="button" class="filter-pill" data-gallery-filter="kitchen">Kitchen</button>
+        </div>
+        <div class="gallery-grid">
+          <button type="button" class="gallery-item wide" data-category="interior" aria-label="Open image: Main dining room in the evening"><img src="static/images/gallery1.jpg" data-fallback="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80" alt="Main dining room in the evening" loading="lazy"><span class="caption">Main dining room in the evening</span></button>
+          <button type="button" class="gallery-item tall" data-category="food" aria-label="Open image: Seasonal vegetable platter"><img src="static/images/gallery2.jpg" data-fallback="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=900&q=80" alt="Seasonal vegetable platter" loading="lazy"><span class="caption">Seasonal vegetable platter</span></button>
+          <button type="button" class="gallery-item " data-category="interior" aria-label="Open image: Courtyard seating under string lights"><img src="static/images/gallery3.jpg" data-fallback="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=900&q=80" alt="Courtyard seating under string lights" loading="lazy"><span class="caption">Courtyard seating under string lights</span></button>
+          <button type="button" class="gallery-item " data-category="food" aria-label="Open image: Wood-fired margherita"><img src="static/images/gallery4.jpg" data-fallback="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=80" alt="Wood-fired margherita" loading="lazy"><span class="caption">Wood-fired margherita</span></button>
+          <button type="button" class="gallery-item tall" data-category="kitchen" aria-label="Open image: Our head chef at the pass"><img src="static/images/gallery5.jpg" data-fallback="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=900&q=80" alt="Our head chef at the pass" loading="lazy"><span class="caption">Our head chef at the pass</span></button>
+          <button type="button" class="gallery-item " data-category="interior" aria-label="Open image: Bar and lounge"><img src="static/images/gallery6.jpg" data-fallback="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=900&q=80" alt="Bar and lounge" loading="lazy"><span class="caption">Bar and lounge</span></button>
+          <button type="button" class="gallery-item wide" data-category="food" aria-label="Open image: Grilled platter from the tandoor"><img src="static/images/gallery7.jpg" data-fallback="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=80" alt="Grilled platter from the tandoor" loading="lazy"><span class="caption">Grilled platter from the tandoor</span></button>
+          <button type="button" class="gallery-item " data-category="food" aria-label="Open image: Belgian chocolate cake"><img src="static/images/gallery8.jpg" data-fallback="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=80" alt="Belgian chocolate cake" loading="lazy"><span class="caption">Belgian chocolate cake</span></button>
+          <button type="button" class="gallery-item " data-category="interior" aria-label="Open image: Private dining room"><img src="static/images/gallery9.jpg" data-fallback="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=900&q=80" alt="Private dining room" loading="lazy"><span class="caption">Private dining room</span></button>
+          <button type="button" class="gallery-item tall" data-category="food" aria-label="Open image: Chef's tasting course"><img src="static/images/gallery10.jpg" data-fallback="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=80" alt="Chef's tasting course" loading="lazy"><span class="caption">Chef's tasting course</span></button>
+          <button type="button" class="gallery-item " data-category="kitchen" aria-label="Open image: Plating in the open kitchen"><img src="static/images/gallery11.jpg" data-fallback="https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?auto=format&fit=crop&w=900&q=80" alt="Plating in the open kitchen" loading="lazy"><span class="caption">Plating in the open kitchen</span></button>
+          <button type="button" class="gallery-item " data-category="food" aria-label="Open image: House mocktails"><img src="static/images/gallery12.jpg" data-fallback="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=900&q=80" alt="House mocktails" loading="lazy"><span class="caption">House mocktails</span></button>
+        </div>
+      </div>
+    </section>
+    <section class="section pt-0">
+      <div class="container">
+        <div class="cta-band">
+          <div class="row align-items-center g-4">
+            <div class="col-lg-8">
+              <h2 data-show-if="guest">Your table is a minute away.</h2>
+              <h2 class="d-none" data-show-if="user"><span data-user-first></span>, your table is waiting.</h2>
+              <p class="mb-0">Pick a date, see which tables are free right now, and reserve instantly.</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+              <a href="booking.html" class="btn btn-saffron btn-lg"><i class="fa-regular fa-calendar-check me-2"></i>Book a table</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer is built by static/js/main.js -->
+  <div id="site-footer"></div>
+
+  <!-- Lightbox for gallery images -->
+  <div class="modal fade lightbox" id="lightbox" tabindex="-1" aria-label="Image preview" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content">
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        <img src="" alt="">
+        <p class="lb-caption"></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

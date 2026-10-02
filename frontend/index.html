@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home | Feastify</title>
+  <meta name="description" content="Feastify restaurant - South Indian classics and modern plates. Book a table online.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23173b30'/%3E%3Ctext x='32' y='44' font-family='Georgia' font-size='36' fill='%23e3a13a' text-anchor='middle'%3EF%3C/text%3E%3C/svg%3E">
+
+  <!-- Bootstrap 5, Font Awesome icons and Google Fonts (loaded from the internet) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&display=swap">
+
+  <!-- Feastify styles -->
+  <link rel="stylesheet" href="static/css/style.css">
+
+  <!-- api.js must load first (shared helpers + image fallback) -->
+  <script src="static/js/api.js"></script>
+  <script src="static/js/main.js"></script>
+</head>
+<body data-page="home">
+  <!-- Navbar is built by static/js/main.js so it is identical on every page -->
+  <div id="site-navbar"></div>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container">
+        <div class="row align-items-center g-5">
+          <div class="col-lg-7">
+            <div class="welcome-line d-none" data-show-if="user"><i class="fa-solid fa-hand-sparkles"></i>Welcome, <span data-user-name></span></div>
+            <h1>Food worth gathering for,<span class="line-2">tables worth staying at.</span></h1>
+            <p class="hero-copy">Slow-cooked South Indian classics and modern plates in a warm, candle-lit room. Reserve a table in under a minute and see live availability as you choose.</p>
+            <div class="hero-actions">
+              <a href="booking.html" class="btn btn-saffron btn-lg"><i class="fa-regular fa-calendar-check me-2"></i>Book a table</a>
+              <a href="menu.html" class="btn btn-ghost-light btn-lg">See the menu</a>
+            </div>
+            <div class="hero-facts">
+              <span><i class="fa-regular fa-clock"></i>Open daily, 11:30 AM to 11 PM</span>
+              <span><i class="fa-solid fa-location-dot"></i>24 Golden Avenue</span>
+              <span><i class="fa-solid fa-phone"></i>+91 98765 43210</span>
+            </div>
+          </div>
+          <div class="col-lg-5">
+            <div class="hero-visual">
+              <div class="arch-frame"><div class="arch"><img src="static/images/hero.jpg" data-fallback="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1000&q=80" alt="A plated main course at Feastify"></div></div>
+              <div class="hero-badge">
+                <div class="stars" aria-label="5 stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                <strong>4.9 from 2,300+ diners</strong>
+                <span>Rated for food, service and ambience</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTRODUCTION -->
+    <section class="section section-bone">
+      <div class="container">
+        <div class="row align-items-center g-5">
+          <div class="col-lg-6 reveal">
+            <div class="intro-collage">
+              <div class="arch big"><img src="static/images/restaurant.jpg" data-fallback="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80" alt="Feastify dining room" loading="lazy"></div>
+              <div class="small"><img src="static/images/food1.jpg" data-fallback="https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=600&q=80" alt="Butter chicken" loading="lazy"></div>
+            </div>
+          </div>
+          <div class="col-lg-6 reveal">
+            <h2>A kitchen built around the slow simmer</h2>
+            <div class="rule"></div>
+            <p class="lead-text mt-4">Feastify began as a twelve-seat family kitchen. Today we cook for hundreds each week, but the rule has not changed: spices are roasted in-house every morning, gravies simmer for hours, and bread goes into the tandoor only when you order.</p>
+            <p class="text-muted-soft">Come for a quick lunch or a long celebration dinner. Eight tables, from cosy two-seaters to a private room for eight, can be reserved online with live availability.</p>
+            <p class="signature-line">"Cook it slowly, serve it warmly." &mdash; Chef Arjun Rao</p>
+            <div class="facts-row">
+              <div><strong>2012</strong><span>Year we opened</span></div>
+              <div><strong>60+</strong><span>Dishes on the menu</span></div>
+              <div><strong>8</strong><span>Tables to reserve</span></div>
+            </div>
+            <a href="about.html" class="btn btn-ghost-leaf mt-4">Read our story</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURED DISHES -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head centered">
+          <h2>Dishes our regulars order again</h2>
+          <div class="rule"></div>
+          <p>Three plates that have stayed on the menu since the first year.</p>
+        </div>
+        <div class="row g-4">
+          <div class="col-md-4 reveal"><article class="dish-card">
+            <div class="arch"><img src="static/images/food1.jpg" data-fallback="https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=700&q=80" alt="Butter chicken" loading="lazy"></div>
+            <h3>Butter Chicken</h3>
+            <p>Tandoor-smoked chicken in a velvety tomato, butter and fenugreek gravy.</p>
+            <div class="dish-meta"><span class="price">&#8377;420</span><span class="tag">Chef's pick</span></div>
+          </article></div>
+          <div class="col-md-4 reveal"><article class="dish-card">
+            <div class="arch"><img src="static/images/food2.jpg" data-fallback="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=700&q=80" alt="Dum biryani" loading="lazy"></div>
+            <h3>Dum Biryani</h3>
+            <p>Aged basmati and tender meat, sealed and slow-cooked with whole spices.</p>
+            <div class="dish-meta"><span class="price">&#8377;380</span><span class="tag spicy">Spicy</span></div>
+          </article></div>
+          <div class="col-md-4 reveal"><article class="dish-card">
+            <div class="arch"><img src="static/images/food3.jpg" data-fallback="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=700&q=80" alt="Belgian chocolate cake" loading="lazy"></div>
+            <h3>Belgian Chocolate Cake</h3>
+            <p>Three layers of dark chocolate sponge and ganache, finished at the table.</p>
+            <div class="dish-meta"><span class="price">&#8377;240</span><span class="tag veg">Vegetarian</span></div>
+          </article></div>
+        </div>
+        <div class="text-center mt-5"><a href="menu.html" class="btn btn-leaf">View the full menu</a></div>
+      </div>
+    </section>
+
+    <!-- WHY CHOOSE US -->
+    <section class="section section-leaf">
+      <div class="container">
+        <div class="row align-items-center g-5">
+          <div class="col-lg-5 reveal">
+            <div class="features-visual"><div class="arch-frame"><div class="arch"><img src="static/images/chef.jpg" data-fallback="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=800&q=80" alt="Chef preparing a dish" loading="lazy"></div></div></div>
+          </div>
+          <div class="col-lg-7 reveal">
+            <h2>Why guests keep coming back</h2>
+            <div class="rule"></div>
+            <div class="mt-4">
+              <div class="feature"><div class="icon"><i class="fa-solid fa-mortar-pestle"></i></div><div><h3>Spices ground every morning</h3><p>Whole spices are roasted and ground in our kitchen daily. Nothing comes from a packet.</p></div></div>
+              <div class="feature"><div class="icon"><i class="fa-solid fa-leaf"></i></div><div><h3>Local, seasonal produce</h3><p>Vegetables arrive from nearby farms each morning, so the menu changes with the season.</p></div></div>
+              <div class="feature"><div class="icon"><i class="fa-regular fa-calendar-check"></i></div><div><h3>Live table booking</h3><p>See exactly which tables are free for your time, and reserve without a phone call.</p></div></div>
+              <div class="feature"><div class="icon"><i class="fa-solid fa-champagne-glasses"></i></div><div><h3>Made for celebrations</h3><p>Birthdays, anniversaries and team dinners - tell us in your booking and we'll prepare.</p></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY PREVIEW -->
+    <section class="section">
+      <div class="container">
+        <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
+          <div class="section-head mb-0"><h2>Inside Feastify</h2><div class="rule"></div></div>
+          <a href="gallery.html" class="btn btn-ghost-leaf">Open the gallery</a>
+        </div>
+        <div class="gallery-grid">
+          <button type="button" class="gallery-item wide" data-category="interior" aria-label="Open image: Main dining room in the evening"><img src="static/images/gallery1.jpg" data-fallback="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80" alt="Main dining room in the evening" loading="lazy"><span class="caption">Main dining room in the evening</span></button>
+          <button type="button" class="gallery-item tall" data-category="food" aria-label="Open image: Seasonal vegetable platter"><img src="static/images/gallery2.jpg" data-fallback="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=900&q=80" alt="Seasonal vegetable platter" loading="lazy"><span class="caption">Seasonal vegetable platter</span></button>
+          <button type="button" class="gallery-item " data-category="interior" aria-label="Open image: Courtyard seating under string lights"><img src="static/images/gallery3.jpg" data-fallback="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=900&q=80" alt="Courtyard seating under string lights" loading="lazy"><span class="caption">Courtyard seating under string lights</span></button>
+          <button type="button" class="gallery-item " data-category="food" aria-label="Open image: Wood-fired margherita"><img src="static/images/gallery4.jpg" data-fallback="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=80" alt="Wood-fired margherita" loading="lazy"><span class="caption">Wood-fired margherita</span></button>
+          <button type="button" class="gallery-item tall" data-category="kitchen" aria-label="Open image: Our head chef at the pass"><img src="static/images/gallery5.jpg" data-fallback="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=900&q=80" alt="Our head chef at the pass" loading="lazy"><span class="caption">Our head chef at the pass</span></button>
+          <button type="button" class="gallery-item " data-category="interior" aria-label="Open image: Bar and lounge"><img src="static/images/gallery6.jpg" data-fallback="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=900&q=80" alt="Bar and lounge" loading="lazy"><span class="caption">Bar and lounge</span></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="section section-bone">
+      <div class="container">
+        <div class="section-head centered">
+          <h2>What diners say</h2>
+          <div class="rule"></div>
+        </div>
+        <div class="row g-4">
+          <div class="col-md-4 reveal"><figure class="quote-card">
+            <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+            <blockquote>The biryani tastes like my grandmother's. We booked the family table online and it was ready with a cake for my father's birthday.</blockquote>
+            <figcaption class="who"><img src="static/images/guest1.jpg" data-fallback="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=80" alt="Priya Sharma" loading="lazy"><div><strong>Priya Sharma</strong><span>Family dinner</span></div></figcaption>
+          </figure></div>
+          <div class="col-md-4 reveal"><figure class="quote-card">
+            <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+            <blockquote>Seeing which tables were free before booking saved us a wasted trip on a Saturday night. Service was quick and genuinely warm.</blockquote>
+            <figcaption class="who"><img src="static/images/guest2.jpg" data-fallback="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80" alt="Arun Kumar" loading="lazy"><div><strong>Arun Kumar</strong><span>Weekend regular</span></div></figcaption>
+          </figure></div>
+          <div class="col-md-4 reveal"><figure class="quote-card">
+            <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div>
+            <blockquote>Hosted a team lunch in the private room. The butter chicken and chocolate cake had everyone asking when we'd come back.</blockquote>
+            <figcaption class="who"><img src="static/images/guest3.jpg" data-fallback="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=120&q=80" alt="Meera Iyer" loading="lazy"><div><strong>Meera Iyer</strong><span>Team lunch</span></div></figcaption>
+          </figure></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="pt-5"></div>
+    <section class="section pt-0">
+      <div class="container">
+        <div class="cta-band">
+          <div class="row align-items-center g-4">
+            <div class="col-lg-8">
+              <h2 data-show-if="guest">Your table is a minute away.</h2>
+              <h2 class="d-none" data-show-if="user"><span data-user-first></span>, your table is waiting.</h2>
+              <p class="mb-0">Pick a date, see which tables are free right now, and reserve instantly.</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+              <a href="booking.html" class="btn btn-saffron btn-lg"><i class="fa-regular fa-calendar-check me-2"></i>Book a table</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer is built by static/js/main.js -->
+  <div id="site-footer"></div>
+
+  <!-- Lightbox for gallery images -->
+  <div class="modal fade lightbox" id="lightbox" tabindex="-1" aria-label="Image preview" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content">
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        <img src="" alt="">
+        <p class="lb-caption"></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

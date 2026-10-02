@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reviews | Feastify</title>
+  <meta name="description" content="Read guest reviews of Feastify and share your own rating.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23173b30'/%3E%3Ctext x='32' y='44' font-family='Georgia' font-size='36' fill='%23e3a13a' text-anchor='middle'%3EF%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&display=swap">
+  <link rel="stylesheet" href="static/css/style.css">
+  <script src="static/js/api.js"></script>
+  <script src="static/js/main.js"></script>
+</head>
+<body data-page="reviews">
+  <div id="site-navbar"></div>
+
+  <main id="main">
+    <header class="page-header bg-contact">
+      <div class="container">
+        <div class="crumbs"><a href="index.html">Home</a> / Reviews</div>
+        <h1>Guest reviews</h1>
+        <p>What our guests say about the food, the service and the evening.</p>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="container">
+        <div class="row g-4">
+          <!-- Rating summary + write a review -->
+          <div class="col-lg-4">
+            <div class="panel review-summary mb-4">
+              <div class="big-score" id="avgScore">0.0</div>
+              <div class="stars-line" id="avgStars" aria-hidden="true"></div>
+              <p class="text-muted-soft mb-3" id="reviewCount">No reviews yet</p>
+              <div id="starBars"></div>
+            </div>
+
+            <div class="panel">
+              <!-- Guests see a login prompt -->
+              <div data-show-if="guest">
+                <h2 class="h4 mb-2">Share your experience</h2>
+                <p class="text-muted-soft">Log in to rate your visit and write a review.</p>
+                <a href="login.html?next=reviews.html" class="btn btn-leaf w-100 mb-2"><i class="fa-solid fa-right-to-bracket me-2"></i>Log in to review</a>
+                <a href="register.html" class="btn btn-outline-secondary w-100 rounded-pill">Create an account</a>
+              </div>
+
+              <!-- Logged-in customers see the form -->
+              <div data-show-if="user">
+                <h2 class="h4 mb-1" id="reviewFormTitle">Write a review</h2>
+                <p class="text-muted-soft small">Posting as <strong data-user-name>you</strong>. One review per customer; you can edit it later.</p>
+                <div id="reviewAlert" class="form-alert" role="alert"></div>
+                <form id="reviewForm" class="feast-form" novalidate>
+                  <label class="form-label d-block">Your rating</label>
+                  <div class="star-input mb-1" role="radiogroup" aria-label="Star rating">
+                    <input type="radio" id="star5" name="rating" value="5"><label for="star5" title="5 stars"><i class="fa-solid fa-star"></i></label>
+                    <input type="radio" id="star4" name="rating" value="4"><label for="star4" title="4 stars"><i class="fa-solid fa-star"></i></label>
+                    <input type="radio" id="star3" name="rating" value="3"><label for="star3" title="3 stars"><i class="fa-solid fa-star"></i></label>
+                    <input type="radio" id="star2" name="rating" value="2"><label for="star2" title="2 stars"><i class="fa-solid fa-star"></i></label>
+                    <input type="radio" id="star1" name="rating" value="1"><label for="star1" title="1 star"><i class="fa-solid fa-star"></i></label>
+                  </div>
+                  <div class="hint mb-3" id="ratingText">Tap a star to rate</div>
+                  <label class="form-label" for="rComment">Your review</label>
+                  <textarea id="rComment" name="comment" class="form-control" rows="5" maxlength="500" placeholder="How was the food, the service and the atmosphere?"></textarea>
+                  <div class="hint text-end"><span id="charCount">0</span>/500</div>
+                  <button type="submit" class="btn btn-saffron w-100 mt-2" id="reviewSubmit"><i class="fa-regular fa-paper-plane me-2"></i>Post review</button>
+                  <button type="button" class="btn btn-link text-danger w-100 mt-1 d-none" id="deleteReview">Delete my review</button>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- All reviews -->
+          <div class="col-lg-8">
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+              <h2 class="h3 mb-0">What guests are saying</h2>
+              <select id="reviewSort" class="form-select w-auto" aria-label="Sort reviews">
+                <option value="new">Newest first</option>
+                <option value="high">Highest rating</option>
+                <option value="low">Lowest rating</option>
+              </select>
+            </div>
+            <div id="reviewList"><p class="text-muted-soft">Loading reviews...</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="static/js/reviews.js"></script>
+</body>
+</html>

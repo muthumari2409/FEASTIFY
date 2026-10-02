@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About | Feastify</title>
+  <meta name="description" content="The story, mission and people behind Feastify restaurant.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23173b30'/%3E%3Ctext x='32' y='44' font-family='Georgia' font-size='36' fill='%23e3a13a' text-anchor='middle'%3EF%3C/text%3E%3C/svg%3E">
+
+  <!-- Bootstrap 5, Font Awesome icons and Google Fonts (loaded from the internet) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&display=swap">
+
+  <!-- Feastify styles -->
+  <link rel="stylesheet" href="static/css/style.css">
+
+  <!-- api.js must load first (shared helpers + image fallback) -->
+  <script src="static/js/api.js"></script>
+  <script src="static/js/main.js"></script>
+</head>
+<body data-page="about">
+  <!-- Navbar is built by static/js/main.js so it is identical on every page -->
+  <div id="site-navbar"></div>
+
+  <main id="main">
+    <header class="page-header bg-about">
+      <div class="container">
+        <div class="crumbs"><a href="index.html">Home</a> / About</div>
+        <h1>Our story</h1>
+        <p>From a twelve-seat family kitchen to a restaurant people plan their celebrations around.</p>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="container">
+        <div class="row g-5 align-items-center">
+          <div class="col-lg-5 reveal">
+            <div class="arch-frame"><div class="arch" style="aspect-ratio:3/4"><img src="static/images/about.jpg" data-fallback="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=900&q=80" alt="Feastify private dining room" loading="lazy"></div></div>
+          </div>
+          <div class="col-lg-7 reveal">
+            <h2>It started with one pot of sambar</h2>
+            <div class="rule"></div>
+            <p class="lead-text mt-4">In 2012, Chef Arjun Rao and his sister Lakshmi opened a tiny kitchen with twelve seats and a menu written on a chalkboard. Word spread through neighbours, then offices, then families who came back every weekend.</p>
+            <p class="text-muted-soft">We have grown into a full restaurant, but every dish is still cooked the way it was on day one: fresh masalas, patient simmering and generous portions. Our online booking system is simply the newest way of keeping a table ready for you.</p>
+            <ul class="timeline mt-4">
+              <li><strong>2012</strong><p>Twelve seats, one chalkboard menu and a lot of sambar.</p></li>
+              <li><strong>2016</strong><p>Moved to Golden Avenue with a tandoor and a courtyard.</p></li>
+              <li><strong>2021</strong><p>Opened the private room for family and team celebrations.</p></li>
+              <li><strong>Today</strong><p>Eight reservable tables with live online availability.</p></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-bone">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-md-6 reveal"><div class="mv-card mission">
+            <i class="fa-solid fa-bullseye"></i>
+            <h2 class="h3">Our mission</h2>
+            <p class="mb-0">To serve honest, freshly cooked food in a room where every guest feels expected - and to make reserving that experience effortless.</p>
+          </div></div>
+          <div class="col-md-6 reveal"><div class="mv-card vision">
+            <i class="fa-regular fa-eye"></i>
+            <h2 class="h3">Our vision</h2>
+            <p class="mb-0 text-muted-soft">To be the neighbourhood's first choice for everyday meals and life's celebrations, run with the care of a family kitchen and the reliability of modern service.</p>
+          </div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head centered"><h2>What you'll find here</h2><div class="rule"></div></div>
+        <div class="row g-4">
+          <div class="col-md-6 col-lg-4"><div class="feature feature-light"><div class="icon"><i class="fa-solid fa-fire-burner"></i></div><div><h3>Open kitchen</h3><p>Watch the tandoor and the dosa griddle from your table.</p></div></div></div>
+          <div class="col-md-6 col-lg-4"><div class="feature feature-light"><div class="icon"><i class="fa-solid fa-people-roof"></i></div><div><h3>Private dining</h3><p>A separate room for up to eight guests with its own service.</p></div></div></div>
+          <div class="col-md-6 col-lg-4"><div class="feature feature-light"><div class="icon"><i class="fa-solid fa-seedling"></i></div><div><h3>Vegetarian-friendly</h3><p>Over half the menu is vegetarian, clearly marked on every dish.</p></div></div></div>
+          <div class="col-md-6 col-lg-4"><div class="feature feature-light"><div class="icon"><i class="fa-solid fa-wheelchair"></i></div><div><h3>Step-free access</h3><p>Ground-floor seating and an accessible restroom.</p></div></div></div>
+          <div class="col-md-6 col-lg-4"><div class="feature feature-light"><div class="icon"><i class="fa-solid fa-square-parking"></i></div><div><h3>Free parking</h3><p>Valet parking for dinner guests, every evening.</p></div></div></div>
+          <div class="col-md-6 col-lg-4"><div class="feature feature-light"><div class="icon"><i class="fa-solid fa-wifi"></i></div><div><h3>Free Wi-Fi</h3><p>Handy for working lunches - just ask your server for the password.</p></div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-bone">
+      <div class="container">
+        <div class="section-head centered"><h2>The people in the kitchen</h2><div class="rule"></div></div>
+        <div class="row g-4 justify-content-center">
+          <div class="col-sm-6 col-lg-4 reveal"><div class="team-card"><div class="arch"><img src="static/images/chef1.jpg" data-fallback="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=600&q=80" alt="Chef Arjun Rao" loading="lazy"></div><h3>Arjun Rao</h3><span>Founder and head chef</span></div></div>
+          <div class="col-sm-6 col-lg-4 reveal"><div class="team-card"><div class="arch"><img src="static/images/chef2.jpg" data-fallback="https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?auto=format&fit=crop&w=600&q=80" alt="Lakshmi Rao" loading="lazy"></div><h3>Lakshmi Rao</h3><span>Co-founder, pastry and desserts</span></div></div>
+          <div class="col-sm-6 col-lg-4 reveal"><div class="team-card"><div class="arch"><img src="static/images/chef3.jpg" data-fallback="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80" alt="Vikram Das" loading="lazy"></div><h3>Vikram Das</h3><span>Restaurant manager</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="pt-5"></div>
+    <section class="section pt-0">
+      <div class="container">
+        <div class="cta-band">
+          <div class="row align-items-center g-4">
+            <div class="col-lg-8">
+              <h2 data-show-if="guest">Your table is a minute away.</h2>
+              <h2 class="d-none" data-show-if="user"><span data-user-first></span>, your table is waiting.</h2>
+              <p class="mb-0">Pick a date, see which tables are free right now, and reserve instantly.</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+              <a href="booking.html" class="btn btn-saffron btn-lg"><i class="fa-regular fa-calendar-check me-2"></i>Book a table</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer is built by static/js/main.js -->
+  <div id="site-footer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

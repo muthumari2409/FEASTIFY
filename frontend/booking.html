@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book a table | Feastify</title>
+  <meta name="description" content="Reserve a table at Feastify with live availability.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23173b30'/%3E%3Ctext x='32' y='44' font-family='Georgia' font-size='36' fill='%23e3a13a' text-anchor='middle'%3EF%3C/text%3E%3C/svg%3E">
+
+  <!-- Bootstrap 5, Font Awesome icons and Google Fonts (loaded from the internet) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&display=swap">
+
+  <!-- Feastify styles -->
+  <link rel="stylesheet" href="static/css/style.css">
+
+  <!-- api.js must load first (shared helpers + image fallback) -->
+  <script src="static/js/api.js"></script>
+  <script src="static/js/main.js"></script>
+</head>
+<body data-page="booking">
+  <!-- Navbar is built by static/js/main.js so it is identical on every page -->
+  <div id="site-navbar"></div>
+
+  <main id="main">
+    <header class="page-header bg-booking">
+      <div class="container">
+        <div class="crumbs"><a href="index.html">Home</a> / Booking</div>
+        <h1>Reserve a table</h1>
+        <p><span data-show-if="guest">Live availability for all eight tables. Log in to reserve.</span><span class="d-none" data-show-if="user">Booking for <strong data-user-name></strong></span></p>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-lg-8">
+            <div class="panel">
+
+              <!-- shown to visitors who are not logged in -->
+              <div class="login-needed" data-show-if="guest">
+                <i class="fa-regular fa-calendar-check"></i>
+                <h2 class="h3">Log in to book a table</h2>
+                <p class="text-muted-soft mx-auto">Bookings are linked to your account so you can see, track and cancel them any time in My Bookings.</p>
+                <div class="d-flex flex-wrap gap-2 justify-content-center mt-3">
+                  <a href="login.html?next=booking.html" class="btn btn-leaf">Log in</a>
+                  <a href="register.html?next=booking.html" class="btn btn-ghost-leaf">Create an account</a>
+                </div>
+              </div>
+
+              <!-- shown to logged-in customers -->
+              <div class="d-none" data-show-if="user">
+                <div class="booking-for">
+                  <div class="avatar" data-user-initials></div>
+                  <div><h2>Booking for <span data-user-name></span></h2><span data-user-email></span></div>
+                </div>
+
+                <div id="bookingAlert" class="form-alert" role="alert"></div>
+
+                <form id="bookingForm" class="feast-form" novalidate>
+                  <h3 class="step-title"><span class="num">1</span>When are you coming?</h3>
+                  <div class="row g-3">
+                    <div class="col-md-5"><label class="form-label" for="bDate">Date</label><input type="date" id="bDate" name="date" class="form-control" required></div>
+                    <div class="col-md-4"><label class="form-label" for="bTime">Time</label><select id="bTime" name="time" class="form-select" required><option value="">Loading...</option></select></div>
+                    <div class="col-md-3"><label class="form-label" for="bGuests">Guests</label><select id="bGuests" name="guests" class="form-select" required></select></div>
+                  </div>
+
+                  <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+                    <h3 class="step-title"><span class="num">2</span>Choose your table</h3>
+                    <div class="live-status" id="liveStatus" aria-live="polite"></div>
+                  </div>
+                  <div class="table-grid" id="tableGrid" role="radiogroup" aria-label="Tables"></div>
+                  <div class="legend mt-3"><span class="l-free">Available</span><span class="l-sel">Your choice</span><span class="l-booked">Already booked</span></div>
+
+                                    <!-- STEP 3: optional food pre-order (dishes and prices come from GET /api/menu) -->
+                  <h3 class="step-title"><span class="num">3</span>Pre-order food <span class="text-muted-soft fw-normal fs-6">(optional)</span></h3>
+                  <p class="text-muted-soft small mb-3">Choose dishes now and they will be ready when you arrive. You pay at the restaurant.</p>
+                  <div class="preorder-tabs" id="preorderTabs" role="group" aria-label="Menu categories"></div>
+                  <div class="preorder-list" id="preorderList"><p class="text-muted-soft small">Loading menu...</p></div>
+                  <div class="preorder-total" id="preorderTotal">
+                    <span><i class="fa-solid fa-bowl-food me-2"></i><span id="preorderCount">No dishes selected</span></span>
+                    <strong id="preorderAmount">&#8377;0</strong>
+                  </div>
+
+                  <h3 class="step-title"><span class="num">4</span>Your details</h3>
+                  <div class="row g-3">
+                    <div class="col-md-6"><label class="form-label" for="bName">Name on booking</label><input id="bName" name="customer_name" class="form-control" required maxlength="50"></div>
+                    <div class="col-md-6"><label class="form-label" for="bEmail">Email</label><input id="bEmail" name="email" type="email" class="form-control" readonly><div class="hint">Your account email. Booking updates are linked to it.</div></div>
+                    <div class="col-md-6"><label class="form-label" for="bPhone">Phone</label><input id="bPhone" name="phone" type="tel" class="form-control" required maxlength="20"></div>
+                    <div class="col-12"><label class="form-label" for="bNote">Special request <span class="text-muted-soft fw-normal">(optional)</span></label><textarea id="bNote" name="special_request" class="form-control" rows="3" maxlength="300" placeholder="Birthday cake, high chair, allergies, window seat..."></textarea></div>
+                  </div>
+                  <button type="submit" class="btn btn-saffron btn-lg mt-4 w-100"><i class="fa-solid fa-check me-2"></i>Reserve this table</button>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="panel-bone mb-4 d-none" data-show-if="user">
+              <h2 class="h4 mb-3">Your booking</h2>
+              <ul class="side-list" id="bookingSummary"></ul>
+            </div>
+            <div class="panel-bone mb-4">
+              <h2 class="h4 mb-3">Our tables</h2>
+              <ul class="side-list">
+                <li><span>Tables 1 - 2</span><strong>2 seats</strong></li>
+                <li><span>Tables 3 - 4</span><strong>4 seats</strong></li>
+                <li><span>Tables 5 - 6</span><strong>6 seats</strong></li>
+                <li><span>Tables 7 - 8</span><strong>8 seats</strong></li>
+              </ul>
+            </div>
+            <div class="panel-bone">
+              <h2 class="h4 mb-3">Good to know</h2>
+              <ul class="side-list">
+                <li><span>Lunch slots</span><strong>12 PM - 3 PM</strong></li>
+                <li><span>Dinner slots</span><strong>6 PM - 10 PM</strong></li>
+                <li><span>Book ahead</span><strong>Up to 60 days</strong></li>
+                <li><span>Table held for</span><strong>15 minutes</strong></li>
+              </ul>
+              <p class="small text-muted-soft mt-3 mb-0">Plans changed? Cancel any upcoming booking from My Bookings so another guest can have the table.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer is built by static/js/main.js -->
+  <div id="site-footer"></div>
+
+  <!-- Booking confirmation -->
+  <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="border-radius:22px;border:0">
+        <div class="modal-header border-0 pb-0">
+          <h2 class="modal-title h4" id="confirmTitle"><i class="fa-solid fa-circle-check text-success me-2"></i>Table reserved</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="confirmBody"></div>
+        <div class="modal-footer border-0 pt-0">
+          <button type="button" class="btn btn-ghost-leaf" data-bs-dismiss="modal">Book another</button>
+          <a href="my-bookings.html" class="btn btn-leaf">Go to My Bookings</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="static/js/booking.js"></script>
+</body>
+</html>
