@@ -14,6 +14,7 @@ from database import get_db
 from models.booking_model import (TABLES, TIME_SLOTS, MAX_GUESTS, MAX_ADVANCE_DAYS,
                                   serialize_booking)
 from models.menu_model import menu_list, build_preorder
+from utils.source import request_source
 from utils.auth import customer_required
 from utils.helpers import ok, error, now_utc, local_now, to_object_id
 from utils.validators import clean, normalise_phone, valid_phone, valid_name, parse_date
@@ -110,6 +111,7 @@ def create_booking():
         "special_request": special,
         "preorder_items": preorder_items,
         "preorder_total": preorder_total,
+        "source": request_source(),
         "status": "Pending",
         "active": True,
         "created_at": now_utc(),

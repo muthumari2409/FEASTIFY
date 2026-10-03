@@ -46,6 +46,7 @@
       ["customers", "admin-customers.html", "fa-users", "Customers"],
       ["analytics", "admin-analytics.html", "fa-chart-line", "Analytics"],
       ["reviews", "admin-reviews.html", "fa-star", "Reviews"],
+      ["instagram", "admin-instagram.html", "fa-camera-retro", "Instagram"],
     ];
     box.innerHTML = `
       <a class="admin-brand" href="admin-dashboard.html"><i class="fa-solid fa-utensils"></i>FEASTIFY

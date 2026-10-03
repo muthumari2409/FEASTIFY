@@ -10,6 +10,7 @@ How a visit is counted:
 4. If the request carries a valid ADMIN cookie, nothing is recorded at all.
 5. When a logged-in customer is recognised, the visit is linked to them once
    and their visit_count / first_visit / last_visit are updated.
+6. The visit remembers where the visitor came from (instagram, direct, ...).
 """
 import re
 
@@ -20,6 +21,7 @@ from database import get_db
 from models.visit_model import new_visit_doc
 from utils.auth import current_admin, current_customer
 from utils.helpers import ok, error, now_utc
+from utils.source import request_source
 from utils.validators import clean
 
 visits_bp = Blueprint("visits", __name__)
@@ -47,6 +49,7 @@ def record_visit():
     new_visit = False
     if visit is None:
         doc = new_visit_doc(session_id, page, now)
+        doc["source"] = request_source()
         try:
             db.visits.insert_one(doc)
             visit, new_visit = doc, True

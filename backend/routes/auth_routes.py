@@ -8,6 +8,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from database import get_db
 from models.user_model import new_user_doc, serialize_user
+from utils.source import request_source
 from utils.auth import (create_token, set_auth_cookie, clear_auth_cookie,
                         current_customer, customer_required, CUSTOMER_COOKIE)
 from utils.helpers import error, ok, now_utc
@@ -50,6 +51,7 @@ def register():
         return error("An account with this email already exists. Please log in.", 409)
 
     doc = new_user_doc(name, email, phone, generate_password_hash(password))
+    doc["source"] = request_source()
     doc["last_login"] = now_utc()
     try:
         doc["_id"] = db.users.insert_one(doc).inserted_id

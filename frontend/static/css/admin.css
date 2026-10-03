@@ -214,3 +214,30 @@ tr.rv-hidden td { opacity: .55; }
 /* Analytics: food pre-orders */
 .chart-box.tall { height: 360px; }
 .stat-card .value.dish-name { font-size: 1.15rem; line-height: 1.3; margin: .2rem 0; }
+
+
+/* Instagram page */
+.ig-link-box { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center;
+  padding: 1.1rem 1.3rem; border-radius: 18px; color: #fff;
+  background: linear-gradient(120deg, #833ab4, #c13584 45%, #f77737); }
+.ig-link-box p { opacity: .9; }
+.ig-link-box code { background: rgba(255,255,255,.18); color: #fff; padding: .45rem .8rem; border-radius: 10px; font-size: .9rem; overflow-wrap: anywhere; }
+.ig-link-box .btn-soft { background: #fff; }
+.ig-post-form { display: grid; grid-template-columns: 2fr 2fr 1.2fr .8fr .8fr auto auto; gap: .6rem; }
+@media (max-width: 991.98px) { .ig-post-form { grid-template-columns: 1fr 1fr; } }
+tr.ig-row td { background: #fdf0f7; }
+.ig-account { display: flex; flex-wrap: wrap; gap: 1.4rem; align-items: center; padding: 1rem 1.2rem; border-radius: 16px; background: #fbf5fa; margin-bottom: 1rem; }
+.ig-account > div { display: flex; flex-direction: column; }
+.ig-account strong { font-size: 1.25rem; color: #173b30; }
+.ig-account span { font-size: .8rem; color: #6b746f; }
+.ig-account .ig-handle { flex-direction: row; gap: .5rem; align-items: center; font-weight: 700; color: #c13584; font-size: 1.05rem; }
+.ig-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 1rem; }
+.ig-post { display: block; border: 1px solid #ece3d3; border-radius: 14px; overflow: hidden; color: inherit; text-decoration: none; background: #fff; transition: transform .15s, box-shadow .15s; }
+.ig-post:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(15,42,34,.12); }
+.ig-thumb { position: relative; aspect-ratio: 1; background: linear-gradient(135deg, #833ab4, #c13584, #f77737); }
+.ig-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ig-type { position: absolute; top: .5rem; left: .5rem; background: rgba(0,0,0,.6); color: #fff; font-size: .72rem; padding: .15rem .5rem; border-radius: 999px; }
+.ig-stats { display: flex; gap: .8rem; padding: .6rem .8rem 0; font-size: .85rem; font-weight: 600; }
+.ig-stats i { margin-right: .25rem; color: #c13584; }
+.ig-post p { padding: .3rem .8rem .8rem; margin: 0; font-size: .8rem; color: #5f6b64; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.ig-setup { padding: 1rem 1.2rem; border-radius: 14px; background: #fff7e8; border: 1px dashed #e3a13a; }

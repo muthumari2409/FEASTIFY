@@ -42,6 +42,27 @@
     true
   );
 
+  /* ---------- Traffic source (Instagram tracking) ----------
+     A link like https://your-site/?from=instagram (or opening the site from
+     inside the Instagram app) marks this browser as "instagram" for 7 days.
+     Every API call then tells the backend where the visitor came from. */
+  const SOURCE_KEY = "feastify_source";
+  function trafficSource() {
+    try {
+      const params = new URLSearchParams(location.search);
+      let src = (params.get("from") || params.get("utm_source") || "").toLowerCase();
+      if (!src && (/instagram/i.test(navigator.userAgent) || /instagram\.com/i.test(document.referrer))) src = "instagram";
+      if (/^[a-z0-9_-]{1,30}$/.test(src)) {
+        localStorage.setItem(SOURCE_KEY, JSON.stringify({ src, at: Date.now() }));
+        return src;
+      }
+      const saved = JSON.parse(localStorage.getItem(SOURCE_KEY) || "null");
+      if (saved && Date.now() - saved.at < 7 * 86400000) return saved.src;
+    } catch (_) { /* storage blocked */ }
+    return "";
+  }
+  trafficSource(); // remember it as soon as the page opens
+
   /* ---------- 2. API helper ---------- */
   async function api(path, options = {}) {
     const request = {
@@ -49,6 +70,8 @@
       headers: { Accept: "application/json" },
       credentials: "same-origin", // sends the HttpOnly login cookie
     };
+    const src = trafficSource();
+    if (src) request.headers["X-Feastify-Source"] = src;
     if (options.body !== undefined) {
       request.headers["Content-Type"] = "application/json";
       request.body = JSON.stringify(options.body);
