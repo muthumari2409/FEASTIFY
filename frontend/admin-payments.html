@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Payments - FEASTIFY Admin</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>💳 Payments</h2>
+    <a href="/admin-dashboard.html" class="btn btn-outline-secondary">← Dashboard</a>
+  </div>
+  <p>Total collected: <b>₹<span id="total">0</span></b></p>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr><th>Customer</th><th>Amount (₹)</th><th>Method</th><th>Transaction ID</th><th>Status</th><th>Date</th></tr>
+      </thead>
+      <tbody id="rows"><tr><td colspan="6">Loading...</td></tr></tbody>
+    </table>
+  </div>
+
+<script>
+async function loadPayments() {
+  const tbody = document.getElementById("rows");
+  const res = await fetch("/api/admin/payments");
+  const data = await res.json();
+  if (!data.success) { tbody.innerHTML = "<tr><td colspan='6'>" + "Could not load payments" + "</td></tr>"; return; }
+
+  tbody.innerHTML = "";
+  let total = 0;
+  if (data.payments.length === 0) {
+    tbody.innerHTML = "<tr><td colspan='6'>No payments yet</td></tr>";
+  }
+  data.payments.forEach(p => {
+    total += Number(p.amount) || 0;
+    const tr = document.createElement("tr");
+    [p.customer, p.amount, p.method, p.transaction_id, p.status, p.paid_at].forEach(v => {
+      const td = document.createElement("td");
+      td.textContent = v;
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+  document.getElementById("total").innerText = total;
+}
+loadPayments();
+</script>
+</body>
+</html>

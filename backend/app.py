@@ -20,6 +20,7 @@ from routes.public_routes import public_bp
 from routes.review_routes import reviews_bp
 from routes.instagram_routes import instagram_bp
 from routes.visit_routes import visits_bp
+from routes.payment_routes import payments_bp
 from utils.auth import current_admin
 
 # Admin pages that require a valid admin cookie BEFORE the HTML is even sent
@@ -30,6 +31,7 @@ PROTECTED_ADMIN_PAGES = {
     "admin-analytics.html",
     "admin-reviews.html",
     "admin-instagram.html",
+        "admin-payments.html",
 }
 
 
@@ -45,7 +47,7 @@ def create_app():
 
     init_db()
 
-    for bp in (public_bp, auth_bp, bookings_bp, visits_bp, admin_bp, reviews_bp, instagram_bp):
+    for bp in (public_bp, auth_bp, bookings_bp, visits_bp, admin_bp, reviews_bp, instagram_bp,payments_bp):
         app.register_blueprint(bp)
 
     # ------------------------------------------------ frontend pages
