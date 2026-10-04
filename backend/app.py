@@ -31,7 +31,8 @@ PROTECTED_ADMIN_PAGES = {
     "admin-analytics.html",
     "admin-reviews.html",
     "admin-instagram.html",
-        "admin-payments.html",
+    "admin-payments.html",
+    "admin-security.html",
 }
 
 
@@ -47,7 +48,7 @@ def create_app():
 
     init_db()
 
-    for bp in (public_bp, auth_bp, bookings_bp, visits_bp, admin_bp, reviews_bp, instagram_bp,payments_bp):
+    for bp in (public_bp, auth_bp, bookings_bp, visits_bp, admin_bp, reviews_bp, instagram_bp, payments_bp):
         app.register_blueprint(bp)
 
     # ------------------------------------------------ frontend pages

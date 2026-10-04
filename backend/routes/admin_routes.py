@@ -4,6 +4,7 @@ Admin login and every admin-only endpoint. All routes except /login are
 protected with @admin_required, so customers get 401 "Unauthorized access".
 """
 import re
+from datetime import timedelta
 
 from flask import Blueprint, request, jsonify, g
 from pymongo.errors import DuplicateKeyError
@@ -18,6 +19,7 @@ from utils.auth import (create_token, set_auth_cookie, clear_auth_cookie,
                         admin_required, ADMIN_COOKIE)
 from utils.helpers import ok, error, now_utc, iso, to_object_id
 from utils.validators import clean, parse_date
+from utils.login_guard import is_blocked, record_attempt, log_blocked
 
 admin_bp = Blueprint("admin", __name__, url_prefix="/api/admin")
 
@@ -37,11 +39,18 @@ def admin_login():
     if not username or not password:
         return error("Please enter the admin username and password.")
 
+    # Brute-force protection (Sliding Window Rate-Limiting algorithm)
+    if is_blocked(username, "admin"):
+        log_blocked(username, "admin")
+        return error("Too many attempts. Please try again after 15 minutes.", 429)
+
     db = get_db()
     admin = db.admins.find_one({"username": username, "role": "admin"})
     if not admin or not check_password_hash(admin["password_hash"], password):
+        record_attempt(username, "admin", False)
         return error("Incorrect admin username or password.", 401)
 
+    record_attempt(username, "admin", True)
     db.admins.update_one({"_id": admin["_id"]}, {"$set": {"last_login": now_utc()}})
     response = jsonify({"success": True, "message": f"Signed in as {admin['username']}.",
                         "admin": {"username": admin["username"]}})
@@ -172,3 +181,23 @@ def list_messages():
 @admin_required
 def analytics():
     return ok({"analytics": build_analytics()})
+
+
+# ---------------------------------------------------------------- security logs
+@admin_bp.get("/security-logs")
+@admin_required
+def security_logs():
+    db = get_db()
+    now = now_utc()
+    logs = db.security_logs.find().sort("time", -1).limit(_limit(100, 500))
+    return ok({
+        "logs": [{
+            "id": str(l["_id"]), "event": l.get("event"), "email": l.get("email"),
+            "role": l.get("role"), "ip": l.get("ip"),
+            "user_agent": l.get("user_agent"), "time": iso(l.get("time")),
+        } for l in logs],
+        "total": db.security_logs.count_documents({}),
+        "last_24h": db.security_logs.count_documents({"time": {"$gte": now - timedelta(hours=24)}}),
+        "failed_15m": db.login_attempts.count_documents(
+            {"success": False, "time": {"$gte": now - timedelta(minutes=15)}}),
+    })

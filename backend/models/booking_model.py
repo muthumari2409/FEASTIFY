@@ -3,6 +3,7 @@ FEASTIFY - models/booking_model.py
 Tables, time slots, statuses and the shape of a booking document.
 """
 from utils.helpers import iso
+from utils.aes_security import decrypt_data
 
 # table number -> seats
 TABLES = {1: 2, 2: 2, 3: 4, 4: 4, 5: 6, 6: 6, 7: 8, 8: 8}
@@ -36,7 +37,7 @@ def serialize_booking(b):
         "user_id": str(b.get("user_id")) if b.get("user_id") else None,
         "customer_name": b.get("customer_name", ""),
         "email": b.get("email", ""),
-        "phone": b.get("phone", ""),
+        "phone": decrypt_data(b.get("phone", "")),   # AES-256 decrypt for display
         "date": b.get("date"),
         "time": b.get("time"),
         "time_label": slot_label(b["time"]) if b.get("time") else "",

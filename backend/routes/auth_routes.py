@@ -14,6 +14,7 @@ from utils.auth import (create_token, set_auth_cookie, clear_auth_cookie,
 from utils.helpers import error, ok, now_utc
 from utils.validators import (clean, normalise_phone, valid_email, valid_phone,
                               valid_name, password_problem)
+from utils.login_guard import is_blocked, record_attempt, log_blocked
 
 auth_bp = Blueprint("auth", __name__, url_prefix="/api/auth")
 
@@ -69,11 +70,18 @@ def login():
     if not email or not password:
         return error("Please enter your email and password.")
 
+    # Brute-force protection (Sliding Window Rate-Limiting algorithm)
+    if is_blocked(email, "customer"):
+        log_blocked(email, "customer")
+        return error("Too many attempts. Please try again after 15 minutes.", 429)
+
     db = get_db()
     user = db.users.find_one({"email": email, "role": "customer"})
     if not user or not check_password_hash(user["password_hash"], password):
+        record_attempt(email, "customer", False)
         return error("Incorrect email or password.", 401)
 
+    record_attempt(email, "customer", True)
     db.users.update_one({"_id": user["_id"]}, {"$set": {"last_login": now_utc()}})
     return _login_response(user, f"Welcome back, {user['name']}!")
 

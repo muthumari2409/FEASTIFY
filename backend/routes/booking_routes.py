@@ -18,6 +18,7 @@ from utils.source import request_source
 from utils.auth import customer_required
 from utils.helpers import ok, error, now_utc, local_now, to_object_id
 from utils.validators import clean, normalise_phone, valid_phone, valid_name, parse_date
+from utils.aes_security import encrypt_data, decrypt_data
 
 bookings_bp = Blueprint("bookings", __name__)
 
@@ -41,7 +42,7 @@ def create_booking():
     data = request.get_json(silent=True) or {}
 
     name = clean(data.get("customer_name"), 50) or user["name"]
-    phone = normalise_phone(clean(data.get("phone"), 25)) or user.get("phone", "")
+    phone = normalise_phone(clean(data.get("phone"), 25)) or decrypt_data(user.get("phone", ""))
     date_s = clean(data.get("date"), 10)
     time_s = clean(data.get("time"), 5)
     special = clean(data.get("special_request"), 300)
@@ -103,7 +104,7 @@ def create_booking():
         "user_id": user["_id"],
         "customer_name": name,
         "email": user["email"],
-        "phone": phone,
+        "phone": encrypt_data(phone),          # AES-256 encrypted before saving
         "date": date_s,
         "time": time_s,
         "guests": guests,
